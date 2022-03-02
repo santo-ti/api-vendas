@@ -29,7 +29,7 @@ npm install
 Após essa instalação, crie o arquivo `ormconfig.json` a partir do `ormconfig-sample.json` e rode o docker local:
 
 ```bash
-docker run --name pg-apivendas -e POSTGRES_PASSWORD=docker -p 5432:5432 -d postgres
+docker run --name pg-apivendas -e POSTGRES_PASSWORD=docker -e POSTGRES_DB=api -p 5432:5432 -d postgres
 ```
 
 Execute a aplicação com o comando `yarn dev` ou `npm run dev`. O servidor estará em execução no endereço `http://localhost:3333`.
