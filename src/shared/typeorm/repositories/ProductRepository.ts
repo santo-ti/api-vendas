@@ -24,6 +24,7 @@ export default class ProductRepository extends Repository<Product> {
       price,
       quantity,
     });
+
     return this.save(entity);
   }
 }
