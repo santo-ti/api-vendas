@@ -20,9 +20,9 @@ export default class UpdateProductService {
       throw new AppError(`Product '${id}' not found.`, 404);
     }
 
-    const productExists = await productsRepository.findByName(name);
+    const productNameExists = await productsRepository.findByName(name);
 
-    if (productExists && name !== product.name) {
+    if (productNameExists && name !== product.name) {
       throw new AppError(`Product '${name}' already exists.`);
     }
 

@@ -20,10 +20,10 @@ export default class UpdateProductService {
       throw new AppError(`User '${id}' not found.`, 404);
     }
 
-    const productExists = await usersRepository.findByEmail(email);
+    const userEmailExists = await usersRepository.findByEmail(email);
 
-    if (productExists && email !== user.email) {
-      throw new AppError(`User '${email}' already exists.`);
+    if (userEmailExists && email !== user.email) {
+      throw new AppError(`Email address '${email}' already used.`);
     }
 
     user.name = name;

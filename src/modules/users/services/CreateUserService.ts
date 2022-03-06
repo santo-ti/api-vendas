@@ -12,9 +12,9 @@ interface IRequest {
 export default class CreateUserService {
   public async execute({ name, email, password }: IRequest): Promise<User> {
     const usersRepository = getCustomRepository(UsersRepository);
-    const emailExists = await usersRepository.findByEmail(email);
+    const userEmailExists = await usersRepository.findByEmail(email);
 
-    if (emailExists) {
+    if (userEmailExists) {
       throw new AppError(`Email address '${email}' already used.`);
     }
 
