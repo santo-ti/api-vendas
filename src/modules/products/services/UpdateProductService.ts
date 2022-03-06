@@ -1,4 +1,4 @@
-import ProductRepository from '@shared/typeorm/repositories/ProductRepository';
+import ProductsRepository from '@repositories/ProductsRepository';
 import { Product } from '@entities/Product';
 import { getCustomRepository } from 'typeorm';
 import AppError from '@shared/errors/AppError';
@@ -12,15 +12,15 @@ interface IRequest {
 
 export default class UpdateProductService {
   public async execute({ id, name, price, quantity }: IRequest): Promise<Product> {
-    const productRepository = getCustomRepository(ProductRepository);
+    const productsRepository = getCustomRepository(ProductsRepository);
 
-    const product = await productRepository.findOne(id);
+    const product = await productsRepository.findOne(id);
 
     if (!product) {
       throw new AppError(`Product '${id}' not found.`, 404);
     }
 
-    const productExists = await productRepository.findByName(name);
+    const productExists = await productsRepository.findByName(name);
 
     if (productExists && name !== product.name) {
       throw new AppError(`Product '${name}' already exists.`);
@@ -30,6 +30,6 @@ export default class UpdateProductService {
     product.price = price;
     product.quantity = quantity;
 
-    return await productRepository.save(product);
+    return await productsRepository.save(product);
   }
 }
