@@ -15,12 +15,11 @@ export default class UsersRepository extends Repository<User> {
     return this.findOne({ email });
   }
 
-  public async createAndSave(name: string, email: string, password: string, avatar: string) {
+  public async createAndSave(name: string, email: string, password: string) {
     const entity = this.create({
       name,
       email,
       password,
-      avatar,
     });
 
     return this.save(entity);
