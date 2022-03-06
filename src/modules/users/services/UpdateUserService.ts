@@ -11,7 +11,7 @@ interface IRequest {
   password: string;
 }
 
-export default class UpdateProductService {
+export default class UpdateUserService {
   public async execute({ id, name, email, password }: IRequest): Promise<User> {
     const usersRepository = getCustomRepository(UsersRepository);
 
