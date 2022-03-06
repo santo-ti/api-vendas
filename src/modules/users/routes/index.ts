@@ -1,12 +1,13 @@
 import { Router } from 'express';
 import UsersController from '../controllers/UsersController';
 import { celebrator, Joi, Segments } from 'celebrate';
+import isAuthenticated from '@shared/http/middlewares/isAuthenticated';
 
 const usersRouter = Router();
 const usersController = new UsersController();
 const celebrate = celebrator({ reqContext: true }, { convert: false });
 
-usersRouter.get('/', usersController.index);
+usersRouter.get('/', isAuthenticated, usersController.index);
 
 usersRouter.get(
   '/:id',
