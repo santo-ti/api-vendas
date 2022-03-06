@@ -24,7 +24,7 @@ usersRouter.post(
     [Segments.BODY]: {
       name: Joi.string().required(),
       email: Joi.string().email().required(),
-      password: Joi.string().required(),
+      password: Joi.string().length(4).required(),
     },
   }),
   usersController.create,
@@ -39,7 +39,7 @@ usersRouter.put(
     [Segments.BODY]: {
       name: Joi.string().required(),
       email: Joi.string().email().required(),
-      password: Joi.string().required(),
+      password: Joi.string().length(4).required(),
     },
   }),
   usersController.update,

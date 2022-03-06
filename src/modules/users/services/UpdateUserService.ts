@@ -2,6 +2,7 @@ import UsersRepository from '@repositories/UsersRepository';
 import { User } from '@entities/User';
 import { getCustomRepository } from 'typeorm';
 import AppError from '@shared/errors/AppError';
+import { hash } from 'bcryptjs';
 
 interface IRequest {
   id: string;
@@ -26,9 +27,11 @@ export default class UpdateProductService {
       throw new AppError(`Email address '${email}' already used.`);
     }
 
+    const hashedPassword = await hash(password, 16);
+
     user.name = name;
     user.email = email;
-    user.password = password;
+    user.password = hashedPassword;
 
     return await usersRepository.save(user);
   }
