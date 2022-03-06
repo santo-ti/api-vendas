@@ -1,10 +1,15 @@
 import { Router } from 'express';
 import UsersController from '../controllers/UsersController';
+import UsersAvatarController from '../controllers/UsersAvatarController';
 import { celebrator, Joi, Segments } from 'celebrate';
 import isAuthenticated from '@shared/http/middlewares/isAuthenticated';
+import multer from 'multer';
+import uploadConfig from '@config/upload';
 
 const usersRouter = Router();
 const usersController = new UsersController();
+const usersAvatarController = new UsersAvatarController();
+const upload = multer(uploadConfig);
 const celebrate = celebrator({ reqContext: true }, { convert: false });
 
 usersRouter.get('/', isAuthenticated, usersController.index);
@@ -55,5 +60,7 @@ usersRouter.delete(
   }),
   usersController.delete,
 );
+
+usersRouter.patch('/avatar', isAuthenticated, upload.single('avatar'), usersAvatarController.update);
 
 export default usersRouter;
