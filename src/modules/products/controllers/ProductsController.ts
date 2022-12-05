@@ -31,7 +31,7 @@ export default class ProductsController {
 
     const product = await service.execute({ name, price, quantity });
 
-    return response.status(201).json(product);
+    return response.status(201).location(`/products/${product.id}`).json(product);
   }
 
   public async update(request: Request, response: Response): Promise<Response> {

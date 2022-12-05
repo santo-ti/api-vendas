@@ -7,7 +7,7 @@ export default function isAuthenticated(request: Request, response: Response, ne
   const authHeader = request.headers.authorization;
 
   if (!authHeader) {
-    throw new AppError(`JWT Token is missing.`, 403);
+    throw new AppError('JWT Token is missing.', 403);
   }
 
   try {
@@ -22,8 +22,8 @@ export default function isAuthenticated(request: Request, response: Response, ne
       id: sub,
     };
 
-    return next();
+    next();
   } catch {
-    throw new AppError(`Invalid JWT Token.`, 403);
+    throw new AppError('Invalid JWT Token.', 403);
   }
 }

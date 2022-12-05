@@ -8,8 +8,8 @@ export default class UsersAvatarController {
 
     const service = new UpdateUserAvatarService();
 
-    const user = await service.execute({ userId, avatarFileName });
+    await service.execute({ userId, avatarFileName });
 
-    return response.json(user);
+    return response.status(204).json();
   }
 }

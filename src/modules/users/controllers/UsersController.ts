@@ -31,7 +31,7 @@ export default class UsersController {
 
     const user = await service.execute({ name, email, password });
 
-    return response.status(201).json(user);
+    return response.status(201).location(`/users/${user.id}`).json(user);
   }
 
   public async update(request: Request, response: Response): Promise<Response> {

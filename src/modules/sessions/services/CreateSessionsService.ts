@@ -19,23 +19,23 @@ interface IResponse {
 export default class CreateSessionsService {
   public async execute({ email, password }: IRequest): Promise<IResponse> {
     const repository = getCustomRepository(UsersRepository);
-    const entity = await repository.findByEmail(email);
+    const user = await repository.findByEmail(email);
 
-    if (!entity) {
-      throw new AppError(`Incorrect email/password combination.`, 401);
+    if (!user) {
+      throw new AppError('Incorrect email/password combination.', 401);
     }
 
-    const passwordConfirmed = await compare(password, entity.password);
+    const passwordConfirmed = await compare(password, user.password);
 
     if (!passwordConfirmed) {
-      throw new AppError(`Incorrect email/password combination.`, 401);
+      throw new AppError('Incorrect email/password combination.', 401);
     }
 
     const token = sign({}, authConfig.jwt.secret, {
-      subject: entity.id,
+      subject: user.id,
       expiresIn: authConfig.jwt.expiresIn,
     });
 
-    return { user: entity, token };
+    return { user, token };
   }
 }

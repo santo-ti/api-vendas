@@ -16,6 +16,7 @@ usersRouter.get('/', isAuthenticated, usersController.index);
 
 usersRouter.get(
   '/:id',
+  isAuthenticated,
   celebrate({
     [Segments.PARAMS]: {
       id: Joi.string().uuid().required(),
@@ -30,7 +31,7 @@ usersRouter.post(
     [Segments.BODY]: {
       name: Joi.string().required(),
       email: Joi.string().email().required(),
-      password: Joi.string().length(4).required(),
+      password: Joi.string().required(),
     },
   }),
   usersController.create,
@@ -38,6 +39,7 @@ usersRouter.post(
 
 usersRouter.put(
   '/:id',
+  isAuthenticated,
   celebrate({
     [Segments.PARAMS]: {
       id: Joi.string().uuid().required(),
@@ -45,7 +47,7 @@ usersRouter.put(
     [Segments.BODY]: {
       name: Joi.string().required(),
       email: Joi.string().email().required(),
-      password: Joi.string().length(4).required(),
+      password: Joi.string().required(),
     },
   }),
   usersController.update,
@@ -53,6 +55,7 @@ usersRouter.put(
 
 usersRouter.delete(
   '/:id',
+  isAuthenticated,
   celebrate({
     [Segments.PARAMS]: {
       id: Joi.string().uuid().required(),
