@@ -6,9 +6,9 @@ export default class UsersAvatarController {
     const userId = `${request.user.id}`;
     const avatarFileName = `${request.file?.filename}`;
 
-    const serviceUserAvatar = new UpdateUserAvatarService();
+    const service = new UpdateUserAvatarService();
 
-    const user = await serviceUserAvatar.execute({ userId, avatarFileName });
+    const user = await service.execute({ userId, avatarFileName });
 
     return response.json(user);
   }
