@@ -9,14 +9,14 @@ interface IRequest {
 
 export default class ShowProductService {
   public async execute({ id }: IRequest): Promise<Product> {
-    const productsRepository = getCustomRepository(ProductsRepository);
+    const repository = getCustomRepository(ProductsRepository);
 
-    const product = await productsRepository.findOne(id);
+    const entity = await repository.findOne(id);
 
-    if (!product) {
+    if (!entity) {
       throw new AppError(`Product '${id}' not found.`, 404);
     }
 
-    return product;
+    return entity;
   }
 }

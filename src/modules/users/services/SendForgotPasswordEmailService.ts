@@ -9,10 +9,10 @@ interface IRequest {
 
 export default class SendForgotPasswordEmailService {
   public async execute({ email }: IRequest): Promise<void> {
-    const usersRepository = getCustomRepository(UsersRepository);
+    const repository = getCustomRepository(UsersRepository);
     const userTokensRepository = getCustomRepository(UserTokensRepository);
 
-    const user = await usersRepository.findByEmail(email);
+    const user = await repository.findByEmail(email);
 
     if (!user) {
       throw new AppError(`E-mail '${email}' not found.`, 404);

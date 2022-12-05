@@ -12,24 +12,24 @@ interface IRequest {
 
 export default class UpdateProductService {
   public async execute({ id, name, price, quantity }: IRequest): Promise<Product> {
-    const productsRepository = getCustomRepository(ProductsRepository);
+    const repository = getCustomRepository(ProductsRepository);
 
-    const product = await productsRepository.findOne(id);
+    const entity = await repository.findOne(id);
 
-    if (!product) {
+    if (!entity) {
       throw new AppError(`Product '${id}' not found.`, 404);
     }
 
-    const productNameExists = await productsRepository.findByName(name);
+    const productNameExists = await repository.findByName(name);
 
-    if (productNameExists && name !== product.name) {
+    if (productNameExists && name !== entity.name) {
       throw new AppError(`Product '${name}' already exists.`);
     }
 
-    product.name = name;
-    product.price = price;
-    product.quantity = quantity;
+    entity.name = name;
+    entity.price = price;
+    entity.quantity = quantity;
 
-    return await productsRepository.save(product);
+    return await repository.save(entity);
   }
 }

@@ -11,13 +11,13 @@ interface IRequest {
 
 export default class CreateProductService {
   public async execute({ name, price, quantity }: IRequest): Promise<Product> {
-    const productsRepository = getCustomRepository(ProductsRepository);
-    const productNameExists = await productsRepository.findByName(name);
+    const repository = getCustomRepository(ProductsRepository);
+    const entity = await repository.findByName(name);
 
-    if (productNameExists) {
+    if (entity) {
       throw new AppError(`Product '${name}' already exists.`);
     }
 
-    return await productsRepository.createAndSave(name, price, quantity);
+    return await repository.createAndSave(name, price, quantity);
   }
 }

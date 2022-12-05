@@ -13,26 +13,26 @@ interface IRequest {
 
 export default class UpdateUserService {
   public async execute({ id, name, email, password }: IRequest): Promise<User> {
-    const usersRepository = getCustomRepository(UsersRepository);
+    const repository = getCustomRepository(UsersRepository);
 
-    const user = await usersRepository.findOne(id);
+    const entity = await repository.findOne(id);
 
-    if (!user) {
+    if (!entity) {
       throw new AppError(`User '${id}' not found.`, 404);
     }
 
-    const userEmailExists = await usersRepository.findByEmail(email);
+    const userEmailExists = await repository.findByEmail(email);
 
-    if (userEmailExists && email !== user.email) {
+    if (userEmailExists && email !== entity.email) {
       throw new AppError(`Email address '${email}' already used.`);
     }
 
     const hashedPassword = await hash(password, 16);
 
-    user.name = name;
-    user.email = email;
-    user.password = hashedPassword;
+    entity.name = name;
+    entity.email = email;
+    entity.password = hashedPassword;
 
-    return await usersRepository.save(user);
+    return await repository.save(entity);
   }
 }

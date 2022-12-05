@@ -7,9 +7,9 @@ import UpdateUserService from '../services/UpdateUserService';
 
 export default class UsersController {
   public async index(request: Request, response: Response): Promise<Response> {
-    const serviceUser = new ListUserService();
+    const service = new ListUserService();
 
-    const listUsers = await serviceUser.execute();
+    const listUsers = await service.execute();
 
     return response.json(listUsers);
   }
@@ -17,9 +17,9 @@ export default class UsersController {
   public async show(request: Request, response: Response): Promise<Response> {
     const { id } = request.params;
 
-    const serviceUser = new ShowUserService();
+    const service = new ShowUserService();
 
-    const user = await serviceUser.execute({ id });
+    const user = await service.execute({ id });
 
     return response.json(user);
   }
@@ -27,20 +27,20 @@ export default class UsersController {
   public async create(request: Request, response: Response): Promise<Response> {
     const { name, email, password } = request.body;
 
-    const serviceUser = new CreateUserService();
+    const service = new CreateUserService();
 
-    const user = await serviceUser.execute({ name, email, password });
+    const user = await service.execute({ name, email, password });
 
-    return response.json(user);
+    return response.status(201).json(user);
   }
 
   public async update(request: Request, response: Response): Promise<Response> {
     const { id } = request.params;
     const { name, email, password } = request.body;
 
-    const serviceUser = new UpdateUserService();
+    const service = new UpdateUserService();
 
-    const user = await serviceUser.execute({ id, name, email, password });
+    const user = await service.execute({ id, name, email, password });
 
     return response.json(user);
   }
@@ -48,10 +48,10 @@ export default class UsersController {
   public async delete(request: Request, response: Response): Promise<Response> {
     const { id } = request.params;
 
-    const serviceUser = new DeleteUserService();
+    const service = new DeleteUserService();
 
-    const user = await serviceUser.execute({ id });
+    await service.execute({ id });
 
-    return response.json(user);
+    return response.status(204).json();
   }
 }

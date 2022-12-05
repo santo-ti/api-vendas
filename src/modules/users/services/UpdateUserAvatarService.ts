@@ -13,16 +13,16 @@ interface IRequest {
 
 export default class UpdateUserAvatarService {
   public async execute({ userId, avatarFileName }: IRequest): Promise<User> {
-    const usersRepository = getCustomRepository(UsersRepository);
+    const repository = getCustomRepository(UsersRepository);
 
-    const user = await usersRepository.findById(userId);
+    const entity = await repository.findById(userId);
 
-    if (!user) {
+    if (!entity) {
       throw new AppError(`User '${userId}' not found.`, 404);
     }
 
-    if (user.avatar) {
-      const userAvatarFilePath = path.join(uploadConfig.directory, user.avatar);
+    if (entity.avatar) {
+      const userAvatarFilePath = path.join(uploadConfig.directory, entity.avatar);
       const userAvatarFileExists = await fs.promises.stat(userAvatarFilePath);
 
       if (userAvatarFileExists) {
@@ -30,8 +30,8 @@ export default class UpdateUserAvatarService {
       }
     }
 
-    user.avatar = avatarFileName;
+    entity.avatar = avatarFileName;
 
-    return await usersRepository.save(user);
+    return await repository.save(entity);
   }
 }

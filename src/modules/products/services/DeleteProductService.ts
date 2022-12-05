@@ -1,5 +1,4 @@
 import ProductsRepository from '@repositories/ProductsRepository';
-import { Product } from '@entities/Product';
 import { getCustomRepository } from 'typeorm';
 import AppError from '@shared/errors/AppError';
 
@@ -8,15 +7,15 @@ interface IRequest {
 }
 
 export default class DeleteProductService {
-  public async execute({ id }: IRequest): Promise<Product> {
-    const productsRepository = getCustomRepository(ProductsRepository);
+  public async execute({ id }: IRequest): Promise<void> {
+    const repository = getCustomRepository(ProductsRepository);
 
-    const product = await productsRepository.findOne(id);
+    const entity = await repository.findOne(id);
 
-    if (!product) {
+    if (!entity) {
       throw new AppError(`Product '${id}' not found.`, 404);
     }
 
-    return await productsRepository.remove(product);
+    await repository.remove(entity);
   }
 }

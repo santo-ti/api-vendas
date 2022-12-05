@@ -12,7 +12,7 @@ interface IRequest {
 
 export default class ResetPasswordService {
   public async execute({ token, password }: IRequest): Promise<void> {
-    const usersRepository = getCustomRepository(UsersRepository);
+    const repository = getCustomRepository(UsersRepository);
     const userTokensRepository = getCustomRepository(UserTokensRepository);
 
     const userToken = await userTokensRepository.findByToken(token);
@@ -21,7 +21,7 @@ export default class ResetPasswordService {
       throw new AppError(`User Token not found.`, 403);
     }
 
-    const user = await usersRepository.findById(userToken.userId);
+    const user = await repository.findById(userToken.userId);
 
     if (!user) {
       throw new AppError(`User '${userToken.userId}' not found.`, 404);

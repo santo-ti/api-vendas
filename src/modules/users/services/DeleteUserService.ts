@@ -1,5 +1,4 @@
 import UsersRepository from '@repositories/UsersRepository';
-import { User } from '@entities/User';
 import { getCustomRepository } from 'typeorm';
 import AppError from '@shared/errors/AppError';
 
@@ -8,15 +7,15 @@ interface IRequest {
 }
 
 export default class DeleteUserService {
-  public async execute({ id }: IRequest): Promise<User> {
-    const usersRepository = getCustomRepository(UsersRepository);
+  public async execute({ id }: IRequest): Promise<void> {
+    const repository = getCustomRepository(UsersRepository);
 
-    const user = await usersRepository.findOne(id);
+    const entity = await repository.findOne(id);
 
-    if (!user) {
+    if (!entity) {
       throw new AppError(`User '${id}' not found.`, 404);
     }
 
-    return await usersRepository.remove(user);
+    await repository.remove(entity);
   }
 }

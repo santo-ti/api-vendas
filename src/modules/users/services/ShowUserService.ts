@@ -9,14 +9,14 @@ interface IRequest {
 
 export default class ListUserService {
   public async execute({ id }: IRequest): Promise<User> {
-    const usersRepository = getCustomRepository(UsersRepository);
+    const repository = getCustomRepository(UsersRepository);
 
-    const user = await usersRepository.findOne(id);
+    const entity = await repository.findOne(id);
 
-    if (!user) {
+    if (!entity) {
       throw new AppError(`User '${id}' not found.`, 404);
     }
 
-    return user;
+    return entity;
   }
 }
