@@ -19,6 +19,16 @@ app.use('/files', express.static(uploadConfig.directory));
 app.use(errors());
 
 app.use((error: Error, request: Request, response: Response, next: NextFunction) => {
+  const { method, url } = request;
+  console.log(
+    JSON.stringify({
+      timestamp: Date.now(),
+      method,
+      url,
+      error,
+    }),
+  );
+
   if (error instanceof AppError) {
     return response.status(error.statusCode).json({
       status: 'error',
