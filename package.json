@@ -3,6 +3,18 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
+  "readmeFilename": "README.md",
+  "author": {
+    "name": "Anderson Santo",
+    "email": "kalangoti@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kalangoti/api-vendas.git"
+  },
+  "bugs": {
+    "url": "https://github.com/kalangoti/api-vendas/issues"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" &amp;&amp; exit 1",
     "dev": "ts-node-dev -r tsconfig-paths/register --inspect --transpile-only --ignore-watch node_modules src/shared/http/server.ts",
