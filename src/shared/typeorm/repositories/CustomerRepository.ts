@@ -8,7 +8,7 @@ export default class CustomerRepository extends Repository<Customer> {
   }
 
   public async findById(id: string): Promise<Customer | undefined> {
-    return this.findOne({ id });
+    return this.findOne(id);
   }
 
   public async findByEmail(email: string): Promise<Customer | undefined> {

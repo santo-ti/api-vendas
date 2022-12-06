@@ -21,9 +21,9 @@ export default class UpdateUserService {
       throw new AppError(`User '${id}' not found.`, 404);
     }
 
-    const userEmailExists = await repository.findByEmail(email);
+    const entityEmail = await repository.findByEmail(email);
 
-    if (userEmailExists && email !== entity.email) {
+    if (entityEmail && email !== entity.email) {
       throw new AppError(`Email address '${email}' already used.`);
     }
 
