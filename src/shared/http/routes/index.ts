@@ -1,9 +1,9 @@
 import { Router } from 'express';
 import productRouter from '@modules/products/routes';
 import userRouter from '@modules/users/routes';
-import passwordRouter from '@modules/users/routes/password.routes';
+import passwordRouter from '@modules/passwords/routes';
 import sessionRouter from '@modules/sessions/routes';
-import profileRouter from '@modules/users/routes/profile.routes';
+import profileRouter from '@modules/profiles/routes';
 
 const routes = Router();
 

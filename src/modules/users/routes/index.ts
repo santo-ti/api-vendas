@@ -8,7 +8,7 @@ import uploadConfig from '@config/upload';
 
 const userRouter = Router();
 const controller = new UserController();
-const avatarController = new UserAvatarController();
+const userAvatarController = new UserAvatarController();
 const upload = multer(uploadConfig);
 const celebrate = celebrator({ reqContext: true }, { convert: false });
 
@@ -64,6 +64,6 @@ userRouter.delete(
   controller.delete,
 );
 
-userRouter.patch('/avatar', isAuthenticated, upload.single('avatar'), avatarController.update);
+userRouter.patch('/avatar', isAuthenticated, upload.single('avatar'), userAvatarController.update);
 
 export default userRouter;
