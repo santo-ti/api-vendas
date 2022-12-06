@@ -29,14 +29,14 @@ export default class UpdateProfileService {
     }
 
     if (password && !old_password) {
-      throw new AppError('Ol password is required.');
+      throw new AppError('Old password is required.');
     }
 
     if (password && old_password) {
       const checkOldPassword = await compare(old_password, entity.password);
 
       if (!checkOldPassword) {
-        throw new AppError('Ol password does not match.');
+        throw new AppError('Old password does not match.');
       }
 
       entity.password = await hash(password, 16);

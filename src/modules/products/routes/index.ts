@@ -1,10 +1,13 @@
 import { Router } from 'express';
 import ProductsController from '../controllers/ProductsController';
 import { celebrator, Joi, Segments } from 'celebrate';
+import isAuthenticated from '@shared/http/middlewares/isAuthenticated';
 
 const productsRouter = Router();
 const productsController = new ProductsController();
 const celebrate = celebrator({ reqContext: true }, { convert: false });
+
+productsRouter.use(isAuthenticated);
 
 productsRouter.get('/', productsController.index);
 
