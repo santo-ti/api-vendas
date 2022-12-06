@@ -1,12 +1,12 @@
 import { Router } from 'express';
-import SessionsController from '../controllers/SessionsController';
+import SessionController from '../controllers/SessionController';
 import { celebrator, Joi, Segments } from 'celebrate';
 
-const sessionsRouter = Router();
-const sessionsController = new SessionsController();
+const sessionRouter = Router();
+const controller = new SessionController();
 const celebrate = celebrator({ reqContext: true }, { convert: false });
 
-sessionsRouter.post(
+sessionRouter.post(
   '/',
   celebrate({
     [Segments.BODY]: {
@@ -14,7 +14,7 @@ sessionsRouter.post(
       password: Joi.string().required(),
     },
   }),
-  sessionsController.create,
+  controller.create,
 );
 
-export default sessionsRouter;
+export default sessionRouter;

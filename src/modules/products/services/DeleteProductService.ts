@@ -1,4 +1,4 @@
-import ProductsRepository from '@repositories/ProductsRepository';
+import ProductRepository from '@repositories/ProductRepository';
 import { getCustomRepository } from 'typeorm';
 import AppError from '@shared/errors/AppError';
 
@@ -8,7 +8,7 @@ interface IRequest {
 
 export default class DeleteProductService {
   public async execute({ id }: IRequest): Promise<void> {
-    const repository = getCustomRepository(ProductsRepository);
+    const repository = getCustomRepository(ProductRepository);
 
     const entity = await repository.findOne(id);
 

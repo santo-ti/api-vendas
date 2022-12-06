@@ -1,4 +1,4 @@
-import ProductsRepository from '@repositories/ProductsRepository';
+import ProductRepository from '@repositories/ProductRepository';
 import { Product } from '@entities/Product';
 import { getCustomRepository } from 'typeorm';
 import AppError from '@shared/errors/AppError';
@@ -9,7 +9,7 @@ interface IRequest {
 
 export default class ShowProductService {
   public async execute({ id }: IRequest): Promise<Product> {
-    const repository = getCustomRepository(ProductsRepository);
+    const repository = getCustomRepository(ProductRepository);
 
     const entity = await repository.findOne(id);
 

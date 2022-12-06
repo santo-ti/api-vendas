@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import UpdateUserAvatarService from '../services/UpdateUserAvatarService';
 
-export default class UsersAvatarController {
+export default class UserAvatarController {
   public async update(request: Request, response: Response): Promise<Response> {
     const userId = `${request.user.id}`;
     const avatarFileName = `${request.file?.filename}`;

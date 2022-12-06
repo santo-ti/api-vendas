@@ -1,20 +1,20 @@
 import { Router } from 'express';
-import UsersController from '../controllers/UsersController';
-import UsersAvatarController from '../controllers/UsersAvatarController';
+import UserController from '../controllers/UserController';
+import UserAvatarController from '../controllers/UserAvatarController';
 import { celebrator, Joi, Segments } from 'celebrate';
 import isAuthenticated from '@shared/http/middlewares/isAuthenticated';
 import multer from 'multer';
 import uploadConfig from '@config/upload';
 
-const usersRouter = Router();
-const usersController = new UsersController();
-const usersAvatarController = new UsersAvatarController();
+const userRouter = Router();
+const controller = new UserController();
+const avatarController = new UserAvatarController();
 const upload = multer(uploadConfig);
 const celebrate = celebrator({ reqContext: true }, { convert: false });
 
-usersRouter.get('/', isAuthenticated, usersController.index);
+userRouter.get('/', isAuthenticated, controller.index);
 
-usersRouter.get(
+userRouter.get(
   '/:id',
   isAuthenticated,
   celebrate({
@@ -22,10 +22,10 @@ usersRouter.get(
       id: Joi.string().uuid().required(),
     },
   }),
-  usersController.show,
+  controller.show,
 );
 
-usersRouter.post(
+userRouter.post(
   '/',
   celebrate({
     [Segments.BODY]: {
@@ -34,10 +34,10 @@ usersRouter.post(
       password: Joi.string().required(),
     },
   }),
-  usersController.create,
+  controller.create,
 );
 
-usersRouter.put(
+userRouter.put(
   '/:id',
   isAuthenticated,
   celebrate({
@@ -50,10 +50,10 @@ usersRouter.put(
       password: Joi.string().required(),
     },
   }),
-  usersController.update,
+  controller.update,
 );
 
-usersRouter.delete(
+userRouter.delete(
   '/:id',
   isAuthenticated,
   celebrate({
@@ -61,9 +61,9 @@ usersRouter.delete(
       id: Joi.string().uuid().required(),
     },
   }),
-  usersController.delete,
+  controller.delete,
 );
 
-usersRouter.patch('/avatar', isAuthenticated, upload.single('avatar'), usersAvatarController.update);
+userRouter.patch('/avatar', isAuthenticated, upload.single('avatar'), avatarController.update);
 
-export default usersRouter;
+export default userRouter;

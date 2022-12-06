@@ -1,4 +1,4 @@
-import UsersRepository from '@repositories/UsersRepository';
+import UserRepository from '@repositories/UserRepository';
 import { getCustomRepository } from 'typeorm';
 import AppError from '@shared/errors/AppError';
 
@@ -8,7 +8,7 @@ interface IRequest {
 
 export default class DeleteUserService {
   public async execute({ id }: IRequest): Promise<void> {
-    const repository = getCustomRepository(UsersRepository);
+    const repository = getCustomRepository(UserRepository);
 
     const entity = await repository.findOne(id);
 

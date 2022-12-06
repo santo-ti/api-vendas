@@ -1,4 +1,4 @@
-import UsersRepository from '@repositories/UsersRepository';
+import UserRepository from '@repositories/UserRepository';
 import { User } from '@entities/User';
 import { getCustomRepository } from 'typeorm';
 import AppError from '@shared/errors/AppError';
@@ -16,9 +16,9 @@ interface IResponse {
   token: string;
 }
 
-export default class CreateSessionsService {
+export default class CreateSessionService {
   public async execute({ email, password }: IRequest): Promise<IResponse> {
-    const repository = getCustomRepository(UsersRepository);
+    const repository = getCustomRepository(UserRepository);
     const user = await repository.findByEmail(email);
 
     if (!user) {

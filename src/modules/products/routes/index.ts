@@ -1,27 +1,27 @@
 import { Router } from 'express';
-import ProductsController from '../controllers/ProductsController';
+import ProductController from '../controllers/ProductController';
 import { celebrator, Joi, Segments } from 'celebrate';
 import isAuthenticated from '@shared/http/middlewares/isAuthenticated';
 
-const productsRouter = Router();
-const productsController = new ProductsController();
+const productRouter = Router();
+const controller = new ProductController();
 const celebrate = celebrator({ reqContext: true }, { convert: false });
 
-productsRouter.use(isAuthenticated);
+productRouter.use(isAuthenticated);
 
-productsRouter.get('/', productsController.index);
+productRouter.get('/', controller.index);
 
-productsRouter.get(
+productRouter.get(
   '/:id',
   celebrate({
     [Segments.PARAMS]: {
       id: Joi.string().uuid().required(),
     },
   }),
-  productsController.show,
+  controller.show,
 );
 
-productsRouter.post(
+productRouter.post(
   '/',
   celebrate({
     [Segments.BODY]: {
@@ -30,10 +30,10 @@ productsRouter.post(
       quantity: Joi.number().integer().positive().required(),
     },
   }),
-  productsController.create,
+  controller.create,
 );
 
-productsRouter.put(
+productRouter.put(
   '/:id',
   celebrate({
     [Segments.PARAMS]: {
@@ -45,17 +45,17 @@ productsRouter.put(
       quantity: Joi.number().integer().positive().required(),
     },
   }),
-  productsController.update,
+  controller.update,
 );
 
-productsRouter.delete(
+productRouter.delete(
   '/:id',
   celebrate({
     [Segments.PARAMS]: {
       id: Joi.string().uuid().required(),
     },
   }),
-  productsController.delete,
+  controller.delete,
 );
 
-export default productsRouter;
+export default productRouter;

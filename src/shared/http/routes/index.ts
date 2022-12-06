@@ -1,8 +1,8 @@
 import { Router } from 'express';
-import productsRouter from '@modules/products/routes';
-import usersRouter from '@modules/users/routes';
+import productRouter from '@modules/products/routes';
+import userRouter from '@modules/users/routes';
 import passwordRouter from '@modules/users/routes/password.routes';
-import sessionsRouter from '@modules/sessions/routes';
+import sessionRouter from '@modules/sessions/routes';
 import profileRouter from '@modules/users/routes/profile.routes';
 
 const routes = Router();
@@ -11,9 +11,9 @@ routes.get('/health', (request, response) => {
   return response.json({ message: 'OK' });
 });
 
-routes.use('/products', productsRouter);
-routes.use('/users', usersRouter);
-routes.use('/sessions', sessionsRouter);
+routes.use('/products', productRouter);
+routes.use('/users', userRouter);
+routes.use('/sessions', sessionRouter);
 routes.use('/password', passwordRouter);
 routes.use('/profile', profileRouter);
 

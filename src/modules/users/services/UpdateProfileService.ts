@@ -1,4 +1,4 @@
-import UsersRepository from '@repositories/UsersRepository';
+import UserRepository from '@repositories/UserRepository';
 import { User } from '@entities/User';
 import { getCustomRepository } from 'typeorm';
 import AppError from '@shared/errors/AppError';
@@ -14,7 +14,7 @@ interface IRequest {
 
 export default class UpdateProfileService {
   public async execute({ userId, name, email, password, old_password }: IRequest): Promise<User> {
-    const repository = getCustomRepository(UsersRepository);
+    const repository = getCustomRepository(UserRepository);
 
     const entity = await repository.findById(userId);
 
