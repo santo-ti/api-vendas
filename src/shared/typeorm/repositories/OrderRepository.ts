@@ -21,12 +21,10 @@ export default class OrderRepository extends Repository<Order> {
     });
   }
 
-  public async createAndSave({ customer, products }: IRequest): Promise<Order> {
-    const entity = this.create({
+  public async createOrder({ customer, products }: IRequest): Promise<Order> {
+    return this.create({
       customer,
       orderProducts: products,
     });
-
-    return this.save(entity);
   }
 }
