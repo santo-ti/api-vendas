@@ -3,7 +3,7 @@ import { Order } from '@entities/Order';
 import { Customer } from '@entities/Customer';
 
 interface IProduct {
-  id: string;
+  product_id: string;
   price: number;
   quantity: number;
 }
@@ -21,10 +21,12 @@ export default class OrderRepository extends Repository<Order> {
     });
   }
 
-  public async createOrder({ customer, products }: IRequest): Promise<Order> {
-    return this.create({
+  public async createAndSave({ customer, products }: IRequest): Promise<Order> {
+    const order = this.create({
       customer,
       orderProducts: products,
     });
+
+    return await this.save(order);
   }
 }

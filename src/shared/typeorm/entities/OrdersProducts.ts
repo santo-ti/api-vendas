@@ -24,10 +24,10 @@ export class OrdersProducts {
   product: Product;
 
   @Column()
-  orderId: string;
+  order_id: string;
 
   @Column()
-  productId: string;
+  product_id: string;
 
   @Column('decimal')
   price: number;
