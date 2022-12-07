@@ -24,13 +24,13 @@ export default class CreateOrderService {
     const customerExists = await customerRepository.findById(customer_id);
 
     if (!customerExists) {
-      throw new AppError('Could not find any customer with the given id.');
+      throw new AppError('Could not found any customer with the given id.', 404);
     }
 
     const existsProducts = await productRepository.findAllByIds(products);
 
     if (!existsProducts.length) {
-      throw new AppError('Could not find any products with the given ids.');
+      throw new AppError('Could not found any products with the given ids.', 404);
     }
 
     const existsProductsIds = existsProducts.map(product => product.id);
@@ -38,7 +38,7 @@ export default class CreateOrderService {
     const checkInexistentProducts = products.filter(product => !existsProductsIds.includes(product.id));
 
     if (checkInexistentProducts.length) {
-      throw new AppError(`Could not find product ${checkInexistentProducts[0].id}.`);
+      throw new AppError(`Could not found product '${checkInexistentProducts[0].id}'.`, 404);
     }
 
     const quantityAvailable = products.filter(
@@ -47,7 +47,7 @@ export default class CreateOrderService {
 
     if (quantityAvailable.length) {
       throw new AppError(
-        `The quantity ${quantityAvailable[0].quantity} is not available for ${quantityAvailable[0].id}.`,
+        `The quantity ${quantityAvailable[0].quantity} is not available for '${quantityAvailable[0].id}'.`,
       );
     }
 
