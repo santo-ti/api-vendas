@@ -20,7 +20,8 @@
     "dev": "ts-node-dev -r tsconfig-paths/register --inspect --transpile-only --ignore-watch node_modules src/shared/http/server.ts",
     "lint": "eslint . --ext .ts",
     "lint-fix": "eslint . --ext .ts --fix",
-    "typeorm": "ts-node-dev ./node_modules/typeorm/cli.js"
+    "typeorm": "ts-node-dev ./node_modules/typeorm/cli.js",
+    "reset": "rm -rf node_modules && yarn"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.2",
@@ -44,6 +45,7 @@
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "celebrate": "^15.0.1",
+    "class-transformer": "^0.5.1",
     "cors": "^2.8.5",
     "date-fns": "^2.29.3",
     "dotenv": "^16.0.3",

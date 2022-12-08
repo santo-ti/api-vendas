@@ -8,12 +8,16 @@ import fs from 'fs';
 
 interface IRequest {
   userId: string;
-  avatarFileName: string;
+  avatarFileName?: string;
 }
 
 export default class UpdateUserAvatarService {
   public async execute({ userId, avatarFileName }: IRequest): Promise<User> {
     const repository = getCustomRepository(UserRepository);
+
+    if (!avatarFileName) {
+      throw new AppError('Avatar file is required.');
+    }
 
     const entity = await repository.findById(userId);
 
