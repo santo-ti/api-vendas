@@ -1,4 +1,5 @@
 import 'reflect-metadata';
+import 'dotenv/config';
 import express, { NextFunction, Request, Response } from 'express';
 import 'express-async-errors';
 import cors from 'cors';
@@ -45,6 +46,6 @@ app.use((error: Error, request: Request, response: Response, next: NextFunction)
   });
 });
 
-app.listen(3333, () => {
-  console.log('🏆 Server started on http://localhost:3333');
+app.listen(process.env.APP_API_PORT, () => {
+  console.log(`🏆 Server started on ${process.env.APP_API_URL}`);
 });
