@@ -16,7 +16,7 @@ export default class ProductRepository extends Repository<Product> {
     return this.findByIds(ids);
   }
 
-  public async createAndSave(name: string, price: number, quantity: number) {
+  public async createAndSave(name: string, price: number, quantity: number): Promise<Product> {
     const entity = this.create({
       name,
       price,
