@@ -2,9 +2,7 @@ import UserRepository from '@repositories/UserRepository';
 import { User } from '@entities/User';
 import { getCustomRepository } from 'typeorm';
 import AppError from '@shared/errors/AppError';
-import uploadConfig from '@config/upload';
-import path from 'path';
-import fs from 'fs';
+import DiskStorageProvider from '@shared/providers/StorageProvider/DiskStorageProvider';
 
 interface IRequest {
   userId: string;
@@ -14,6 +12,8 @@ interface IRequest {
 export default class UpdateUserAvatarService {
   public async execute({ userId, avatarFileName }: IRequest): Promise<User> {
     const repository = getCustomRepository(UserRepository);
+
+    const storageProvider = new DiskStorageProvider();
 
     if (!avatarFileName) {
       throw new AppError('Avatar file is required.');
@@ -26,15 +26,12 @@ export default class UpdateUserAvatarService {
     }
 
     if (entity.avatar) {
-      const userAvatarFilePath = path.join(uploadConfig.directory, entity.avatar);
-      const userAvatarFileExists = await fs.promises.stat(userAvatarFilePath);
-
-      if (userAvatarFileExists) {
-        await fs.promises.unlink(userAvatarFilePath);
-      }
+      await storageProvider.deleteFile(entity.avatar);
     }
 
-    entity.avatar = avatarFileName;
+    const fileName = await storageProvider.saveFile(avatarFileName);
+
+    entity.avatar = fileName;
 
     return await repository.save(entity);
   }

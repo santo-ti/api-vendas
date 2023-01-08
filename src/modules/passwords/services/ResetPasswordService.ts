@@ -18,7 +18,7 @@ export default class ResetPasswordService {
     const userToken = await userTokenRepository.findByToken(token);
 
     if (!userToken) {
-      throw new AppError('User Token not found.', 403);
+      throw new AppError(`User Token '${token}' not found.`, 404);
     }
 
     const user = await repository.findById(userToken.userId);
