@@ -1,6 +1,6 @@
-import uploadConfig from '@config/upload';
 import fs from 'fs';
 import path from 'path';
+import uploadConfig from '@config/upload';
 
 export default class DiskStorageProvider {
   public async saveFile(file: string): Promise<string> {

@@ -9,7 +9,9 @@ import uploadConfig from '@config/upload';
 const userRouter = Router();
 const controller = new UserController();
 const userAvatarController = new UserAvatarController();
-const upload = multer(uploadConfig);
+
+const upload = multer(uploadConfig.multer);
+
 const celebrate = celebrator({ reqContext: true }, { convert: false });
 
 userRouter.get('/', isAuthenticated, controller.index);

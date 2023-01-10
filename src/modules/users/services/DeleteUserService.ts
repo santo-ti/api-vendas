@@ -11,7 +11,7 @@ export default class DeleteUserService {
   public async execute({ id }: IRequest): Promise<void> {
     const repository = getCustomRepository(UserRepository);
 
-    const storageProvider = new DiskStorageProvider();
+    // const storageProvider = new DiskStorageProvider();
 
     const entity = await repository.findOne(id);
 
@@ -19,7 +19,7 @@ export default class DeleteUserService {
       throw new AppError(`User '${id}' not found.`, 404);
     }
 
-    await storageProvider.deleteFile(entity.avatar);
+    // await storageProvider.deleteFile(entity.avatar);
     await repository.remove(entity);
   }
 }

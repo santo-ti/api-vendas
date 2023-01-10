@@ -2,7 +2,9 @@ import UserRepository from '@repositories/UserRepository';
 import { User } from '@entities/User';
 import { getCustomRepository } from 'typeorm';
 import AppError from '@shared/errors/AppError';
+import uploadConfig from '@config/upload';
 import DiskStorageProvider from '@shared/providers/StorageProvider/DiskStorageProvider';
+import S3StorageProvider from '@shared/providers/StorageProvider/S3StorageProvider';
 
 interface IRequest {
   userId: string;
@@ -12,8 +14,6 @@ interface IRequest {
 export default class UpdateUserAvatarService {
   public async execute({ userId, avatarFileName }: IRequest): Promise<User> {
     const repository = getCustomRepository(UserRepository);
-
-    const storageProvider = new DiskStorageProvider();
 
     if (!avatarFileName) {
       throw new AppError('Avatar file is required.');
@@ -25,13 +25,25 @@ export default class UpdateUserAvatarService {
       throw new AppError(`User '${userId}' not found.`, 404);
     }
 
-    if (entity.avatar) {
-      await storageProvider.deleteFile(entity.avatar);
+    if (uploadConfig.driver === 's3') {
+      const storageProvider = new S3StorageProvider();
+
+      if (entity.avatar) {
+        await storageProvider.deleteFile(entity.avatar);
+      }
+
+      const filename = await storageProvider.saveFile(avatarFileName);
+      entity.avatar = filename;
+    } else {
+      const storageProvider = new DiskStorageProvider();
+
+      if (entity.avatar) {
+        await storageProvider.deleteFile(entity.avatar);
+      }
+
+      const filename = await storageProvider.saveFile(avatarFileName);
+      entity.avatar = filename;
     }
-
-    const fileName = await storageProvider.saveFile(avatarFileName);
-
-    entity.avatar = fileName;
 
     return await repository.save(entity);
   }
