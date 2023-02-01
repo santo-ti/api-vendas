@@ -2,7 +2,7 @@ import ProductRepository from '@repositories/ProductRepository';
 import { Product } from '@entities/Product';
 import { getCustomRepository } from 'typeorm';
 import AppError from '@shared/errors/AppError';
-import RedisCache from '@shared/cache/RedisCache';
+import redisCache from '@shared/cache/RedisCache';
 
 interface IRequest {
   id: string;
@@ -21,9 +21,9 @@ export default class UpdateProductService {
       throw new AppError(`Product '${id}' not found.`, 404);
     }
 
-    const productNameExists = await repository.findByName(name);
+    const entityName = await repository.findByName(name);
 
-    if (productNameExists && name !== entity.name) {
+    if (entityName && name !== entity.name) {
       throw new AppError(`Product '${name}' already exists.`);
     }
 
@@ -31,7 +31,7 @@ export default class UpdateProductService {
     entity.price = price;
     entity.quantity = quantity;
 
-    const redisCache = new RedisCache();
+    // const redisCache = new RedisCache();
 
     await redisCache.invalidate('api-vendas-PRODUCT_LIST');
 

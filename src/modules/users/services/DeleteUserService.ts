@@ -1,7 +1,7 @@
 import UserRepository from '@repositories/UserRepository';
 import { getCustomRepository } from 'typeorm';
 import AppError from '@shared/errors/AppError';
-import DiskStorageProvider from '@shared/providers/StorageProvider/DiskStorageProvider';
+// import DiskStorageProvider from '@shared/providers/StorageProvider/DiskStorageProvider';
 
 interface IRequest {
   id: string;

@@ -1,18 +1,22 @@
 import Redis, { Redis as RedisClient } from 'ioredis';
 import cacheConfig from '@config/cache';
 
-export default class RedisCache {
+class RedisCache {
   private client: RedisClient;
+  private connected = false;
 
   private readonly OneDay: number = 86400;
   private readonly FiveMinutes: number = 300;
   private readonly OneMinute: number = 60;
 
   constructor() {
-    this.client = new Redis(cacheConfig.config.redis);
+    if (!this.connected) {
+      this.client = new Redis(cacheConfig.config.redis);
+      this.connected = true;
+    }
   }
 
-  public async save(key: string, value: any, seconds: number = this.OneDay): Promise<void> {
+  public async save(key: string, value: unknown, seconds: number = this.OneDay): Promise<void> {
     await this.client.setex(key, seconds, JSON.stringify(value));
   }
 
@@ -32,3 +36,5 @@ export default class RedisCache {
     await this.client.del(key);
   }
 }
+
+export default new RedisCache();
